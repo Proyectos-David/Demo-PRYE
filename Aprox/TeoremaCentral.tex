@@ -1,0 +1,163 @@
+\subsubsection{Teorema Central del Límite}
+Es de interés conocer la distribución de una variable aleatoria la
+cual se puede escribir como combinación de varias variables
+aleatorias. Estas combinaciones son llamadas \emph{estadísticos}.
+Un ejemplo puede ser simplemente la suma o producto de dos variables
+aleatorias. Uno de los más simples pero a su vez el que llevó
+a uno de los resultados más importantes es el de la media.
+\begin{Teo}
+  Sea $\{X_n\}_{n\in\Z^+}$ una colección de variables aleatorias
+  independientes e igualmente distribuidas, donde $\mu$ es su media y $\sigma^2$
+  su varianza. denotando $\overline{X_n}=\frac{1}{n}\sum_{k=1}^nX_k$, Entonces,
+  \[\sqrt{n}\,\overline{X}_n\longrightarrow N(\mu,\sigma^2)\]
+  en distribución.
+\end{Teo}
+
+Antes de continuar con la demostración, se presenta un resultado sobre suceciones.
+\begin{Lema}
+  Sean $x_n,y_n$ sucesiones complejas y $M\in\R^+$ tal que, para todo
+  $n\in\Z^+$,
+  \begin{align*}
+    |x_n| &\leq M\\
+    |y_n| &\leq M
+  \end{align*}
+  Entonces, para $n\in\Z^+$,
+  \[
+    \left|\prod_{k=1}^n x_k - \prod_{j=1}^n y_j\right| \leq 
+    M^{n-1}\sum_{k=1}^n |x_k - y_k|
+  \]
+\end{Lema}
+\begin{Demo}
+  Sean $x_n$ y $y_n$ sucesiones con las condiciones enunciadas. La
+  demostración se hará por inducción.
+  
+  Caso base ($n=1$):
+  \[|x_1-y_1| \leq |x_1-y_1|\]
+
+  Paso inductivo:\\
+  Supóngase que la propiedad se mantiene para algún $n\in\Z^+$.
+  \begin{longderivation}
+      & \left|\prod_{k=1}^{n+1} x_k - \prod_{j=1}^{n+1} y_j\right|\\
+    =\\
+      & \frac{1}{2}\left|
+        (x_{n+1}-y_{n+1})\left(
+          \prod_{k=1}^n x_k + \prod_{j=1}^n y_j
+        \right)
+        + (x_{n+1}+y_{n+1})\left(
+          \prod_{k=1}^n x_k - \prod_{j=1}^n y_j
+        \right)
+      \right|\\
+    \leq\\
+      & \frac{1}{2}|x_{n+1}-y_{n+1}|\left(
+        \prod_{k=1}^n |x_k| - \prod_{j=1}^n |y_j|
+      \right)
+      + \frac{1}{2}(|x_{n+1} + y_{n+1})\left|
+        \prod_{k=1}^n x_k - \prod_{j=1}^n y_j
+      \right|\\
+    \leq\\
+      & \frac{1}{2}|x_{n+1}-y_{n+1}|\left(
+        2M^n
+      \right)
+      + \frac{1}{2}(2M)
+        M^{n-1}\sum_{k=1}^n |x_k - y_k|\\
+    =\\
+      & M^n\sum_{k=1}^{n+1} |x_k - y_k|
+  \end{longderivation}
+\end{Demo}
+
+Procediendo con la demostración del teorema.
+\begin{Demo}
+  Se define $Z_n = \frac{X_n-\mu}{\sigma}$. Para todo $n\in\Z^+$,
+  \begin{align*}
+    \text{E}[Z_n]&= \text{E}\left[\frac{X_n-\mu}{\sigma}\right]
+    = 0\\
+    \text{Var}[Z_n] &= \text{E}\left[\frac{X_n-\mu}{\sigma}\right]
+    = 1
+  \end{align*}
+  El enunciado del teorema resulta equivalente a mostrar que
+  \[\sqrt{n}\,\overline{Z}_n\longrightarrow N(0,1)\]
+
+  Sea $\phi$ la función característica de $Z_n$ con $n\in\Z^+$.
+  Se mostrará una convergencia puntual de la función
+  característica. Es decir,
+  \[\lim_{n\to\infty}\phi_{\sqrt{n}\overline{Z}_n}(t) = e^{-t^2/2}\]
+  \begin{longderivation}
+      & \phi_{\sqrt{n}\overline{Z}_n}(t)\\
+    =\\
+      & \text{E}\left[
+        \exp\left(it\frac{Z_1 + Z_2 +\dots+Z_n}{\sqrt{n}}\right)
+      \right]\\
+    =\\
+      & \text{E}\left[
+        \exp\left(
+          \prod_{k=1}^n\exp\left(i\frac{t}{\sqrt{n}}Z_k\right)
+        \right)
+      \right]\\
+    \why[=]{
+      Dado que las variables aleatorias en $\{Z_k\}_{k\in\Z^+}$ son
+      independientes entre si
+    }\\
+      & \prod_{k=1}^n\text{E}\left[
+        \exp\left(i\frac{t}{\sqrt{n}}Z_k\right)
+      \right]\\
+    =\\
+      & \prod_{k=1}^n\phi\left(\frac{t}{\sqrt{n}}\right)\\
+    =\\
+      & \left[\phi\left(\frac{t}{\sqrt{n}}\right)\right]^n\\
+  \end{longderivation}
+
+Dado que el valor esperado y la varianza de las variables $Z_n$
+existen, se tiene por las
+\hyperref[Teo:prop_carac]{propiedades de la función característica}
+que $\phi(0)=1$, $\phi'(0)=0$ y $\phi''(0) = -1$.
+Por el teorema de Taylor, se tiene que para algún $\xi\in\R$
+\[\phi\left(\frac{t}{\sqrt{n}}\right) = 
+1 -\frac{t^2}{2n} + \frac{\phi'''(\xi)}{3!}\left(\frac{t}{\sqrt{n}}\right)^3\]
+
+Tomando $f_n(t) = \frac{t^2}{2} + \frac{\phi'''(\xi)}{3!}\frac{t^3}{\sqrt{n}}$,
+hace falta mostrar que, puntualmente,
+\[\left(1 - \frac{f_n(t)}{n}\right)^n \longrightarrow e^{-\nicefrac{t^2}{2}}\]
+
+Nótese que, puntualmente, $f_n$ converge a $\frac{t^2}{2}$ y es acotada.
+Sean $t\in\R$ y $\epsilon>0$, entonces, por lo mencionado anteriormente, existe
+$N\in\Z^+$ tal que para todo $n\geq N$,
+\begin{align*}
+  \left|f_n(t) - \frac{t^2}{2}\right| &< \epsilon\\
+  \left|1 - \frac{f_n(t)}{n}\right|
+    &\leq 1 + \frac{\underset{n\in\Z^+}{\sup} |f_n(t)|}{n}\\
+  \left|
+    \left(1 - \frac{t^2}{2n}\right)^n - e^{-\nicefrac{t^2}{2}}
+  \right| &< \epsilon
+\end{align*}
+Entonces,
+\begin{longderivation}
+    & \left|
+      \left(1 - \frac{f_n(t)}{n}\right)^n - e^{-\nicefrac{t^2}{2}}
+    \right|\\
+  =\\
+    & \left|
+      \left(1 - \frac{f_n(t)}{n}\right)^n - \left(1 - \frac{t^2}{2n}\right)^n
+      + \left(1 - \frac{t^2}{2n}\right)^n - e^{-\nicefrac{t^2}{2}}
+    \right|\\
+  \leq\\
+    & \left|
+      \left(1 - \frac{f_n(t)}{n}\right)^n - \left(1 - \frac{t^2}{2n}\right)^n
+    \right| + \left|
+      \left(1 - \frac{t^2}{2n}\right)^n - e^{-\nicefrac{t^2}{2}}
+    \right|\\
+  \why[<]{Usando el lema presentado anteriormente}\\
+    & \left(1 + \frac{\underset{n\in\Z^+}{\sup} |f_n(t)|}{n}\right)^n
+    \sum_{k=1}^{n-1}\frac{|f_n(t)-\nicefrac{t^2}{2}|}{n}
+    + \epsilon\\
+  <\\
+    & \left(1 + \frac{\underset{n\in\Z^+}{\sup} |f_n(t)|}{n}\right)^n
+    \left(1 + \frac{\underset{n\in\Z^+}{\sup} |f_n(t)|}{n}\right)^{-1}
+  \epsilon + \epsilon\\
+\end{longderivation}
+En el sumando izquierdo, fuera del factor $\epsilon$, hay dos sucesiones
+numéricas, una de estas es creciente y converge a una exponencial.
+La otra es decreciente y converge a $1$. Es decir, ambos valores son finitos.
+Así, se tiene que puntualmente
+\[\phi_{\sqrt{n}\overline{Z}_n}(t)\longrightarrow e^{-\nicefrac{t^2}{2}}\]
+Por unicidad de la función característica, se concluye la demostración.
+\end{Demo}

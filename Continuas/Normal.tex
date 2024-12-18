@@ -1,0 +1,264 @@
+\subsubsection{Distribución Normal}
+\begin{Def}
+  Sea $X$ una variable aleatoria continua. $X$ tiene distribución normal
+  de parámetros $\mu\in\R$, $\sigma^2\in\R^+$ cuando su función de densidad es
+  \[
+    f(x) = \dfrac{1}{\sqrt{2\pi\sigma^2}}
+    e^{-\nicefrac{(x-\mu)^2}{\left(2\sigma^2\right)}}
+    \qquad (x\in\R)
+  \]
+  Esto se denotará como $X\sim N(\mu,\sigma^2)$.
+\end{Def}
+\begin{Teo}
+  Sean $X\sim N(\mu,\sigma^2)$ y $f$ la función de masa de $X$. Entonces,
+  \begin{enumerate}
+    \item Para todo $x\in\R$, $f(x) \geq 0$.
+    \item $\int_{\R}{f(x)}\diff{x} = 1$.
+    \item $\text{E}[X] = \mu$.
+    \item $\text{Var}[X] = \sigma^2$.
+  \end{enumerate}
+\end{Teo}
+
+Para las integrales involucradas en los resultados del teorema es
+conveniente tener el siguiente resultado anterior a proceder con el teorema.
+\[I = \int_\R e^{-x^2}\diff{x} = \sqrt{\pi}\]
+\begin{longderivation}
+    & I^2\\
+  =\\
+    & \left(\int_{\R}e^{-x^2}\diff{x}\right)\left(\int_{\R}e^{-x^2}\diff{x}\right)\\
+  =\\
+    & \left(\int_{\R}e^{-x^2}\diff{x}\right)\left(\int_{\R}e^{-y^2}\diff{y}\right)\\
+  =\\
+    & \int_{\R}\int_{\R}e^{-(x^2+y^2)}\diff{x,y}\\
+  =\\
+    & \int_{\R^2}e^{-(x^2+y^2)}\diff{x,y}\\
+  =\\
+    & \smashoperator[r]{\int_{\R^2-\set{(x,0)\in\R^2}{x\leq0}}}
+    e^{-(x^2+y^2)}\diff{x,y}
+\end{longderivation}
+La validez de este último paso se justifica demostrando que la integral de esta función
+sobre el conjunto $\set{(x,0)\in\R^2}{x\leq0}$ es nula.
+Esto se hará en dos momentos.
+
+Inicialmente, se mostrará
+que la integral sobre el conjunto $\{(0,0)\}$ es nula.
+Para $n\in\Z^+$, se define la sucesión $K_n=[-\nicefrac{1}{n},\nicefrac{1}{n}]$. Para todo
+$n\in\Z^+$, $K_n$ es compacto y $K_{n+1}\subseteq K_n$, luego $\bigcap_{n\in\Z^+}K_n\not=\varnothing$
+y $\diam\bigcap_{n\in\Z^+}K_n = 0$. Dado que, para todo $n\in\Z^+$, se
+tiene que $0\in K_n$, entonces, $\bigcap_{n\in\Z^+}K_n=\{0\}$.
+
+Como el máximo de $\left|e^{-(x^2+y^2)}\right|$ es $1$, y la longitud del contorno $K_n\times K_n$ es
+$\nicefrac{4}{n}$, entonces,
+\[
+  \left|\smashoperator[r]{\int_{K_n\times K_n}}
+  e^{-(x^2+y^2)}\diff{x,y}\right|\leq \frac{4}{n}
+\]
+
+Con esto se obtiene entonces que
+\[
+  \int_{\{(0,0)\}}e^{-(x^2+y^2)}\diff{x,y} = 0
+\]
+
+Con esto, la integral sobre $\set{(x,0)}{x\leq0}$ coincide con la interal sobre
+$\set{(x,0)}{x<0}=\R^-\times\{0\}$. Para $n\in\Z^+$, se define la sucesión
+\[
+  S_n = \set{(x,y)\in\R^2}{
+    x<0\land\arctan\left|\frac{y}{x}\right|\leq\frac{1}{n}
+  }\cup\{0,0\}
+\]
+
+Por definición, se obtiene que
+\begin{longderivation}
+    & (x,y)\in S_n\\
+  \iff\\
+    & (x,y)=(0,0) \lor
+    \Forall{n}[n\in\Z^+]{
+      x<0\land\arctan\left|\frac{y}{x}\right|\leq\frac{1}{n}
+    }
+\end{longderivation}
+De esta última proposición, se obtiene que
+\[\left(R^-\times\{0\}\right)\cup\{0,0\}\subseteq\bigcap_{n\in\Z^+}S_n\]
+Ashora, supóngase que existe $(x,y)\in\R^2$ tal que
+$(x,y)\in\bigcap_{n\in\Z^+}S_n-
+\left(\left(R^-\times\{0\}\right)\cup\{0,0\}\right)$.
+Es decir,
+\[
+  \Forall{n}[n\in\Z^+]{
+      x<0\land\arctan\left|\frac{y}{x}\right|\leq\frac{1}{n}
+    }
+  \land
+  y\not=0
+\]
+Lo cual es contradictorio, pues de ser el caso $a = \arctan\left|\frac{y}{x}\right| >0$,
+pero existe $N\in\Z^+$ tal que $a > \frac{1}{N}$. Así, se concluye la igualdad
+\[\bigcap_{n\in\Z^+}S_n = \left(R^-\times\{0\}\right)\cup\{(0,0)\}\]
+
+Ahora, para mostrar que la integral sobre este conjunto es nula, se
+integrará sobre $S_n$. $S_n$, por el resultado previo, puede
+ser integrado sin tomar en cuenta $\{(0,0)\}$. De esta forma,
+una parametrización de $S_n-\{(0,0)\}$ es
+\[\vv{t(r,\theta)}=\left<r\cos(\theta),r\sin(\theta)\right>
+\qquad(r,\theta)\in\R^+\times[\pi-\nicefrac{1}{n},\pi+\nicefrac{1}{n}]\]
+acomodando $\vv{t}$ para $\R^3$, el elemento de área es
+\begin{longderivation}<0.9>
+    & \left|\vv{t_r} \times \vv{t_\theta}\right|\\
+  =\\
+    & \left|
+      \left<\cos(\theta),\sin(\theta),0\right>
+      \times
+      \left< -r\sin(\theta),r\cos(\theta),0\right>
+    \right|\\
+  =\\
+    & \left|
+      \left<0,0,r\cos^2(\theta) + r\sin^2(\theta)\right>
+    \right|\\
+  =\\
+    & r
+\end{longderivation}
+Por el resutlado anterior a cerca de la integral sobre $\{(0,0)\}$, se puede
+extender el dominio de $\vv{t}$ de forma que se pierda la biyección únicamente
+en $\{(0,0)\}$. Así, tomando $r\in\R^+\cup\{0\}$, la integral sobre $S_n$
+resulta igual a
+\begin{longderivation}
+    & \int_0^{\infty}\int_{\pi-\nicefrac{1}{n}}^{\pi+\nicefrac{1}{n}}
+    re^{-r^2}\diff{\theta,r}\\
+  =\\
+    & \frac{1}{n}\int_0^{\infty}2re^{-r^2}\diff{r}\\
+  \why[=]{Tomando $u=r^2$}\\
+    & \frac{1}{n}
+\end{longderivation}
+Así,
+\[
+\smashoperator{\int_{\set{(x,0)\in\R^2}{x\leq0}}}
+e^{-\left(x^2+y^2\right)}\diff{x,y}
+=
+\lim_{n\to\infty}\int_{S_n}e^{-\left(x^2+y^2\right)}\diff{x,y}
+=
+\lim_{n\to\infty}\frac{1}{n}
+= 0
+\]
+
+Procediendo ahora sí con la integral sobre $\R^2-\set{(x,0)\in\R^2}{x\leq0}$,
+se utilizará la misma parametrización que se mostró para el último
+resultado, únicamente cambiando su dominio por
+\[(r,\theta)\in\R^+\times(-\pi,\pi)\]
+Por el resutlado anterior, se puede extender el dominio a
+$\left(R^+\cup\{0\}\right)\times[-\pi,\pi]$.
+Así, $I^2$ resulta igual a
+\begin{longderivation}
+    & \int_0^\infty\int_{-\pi}^\pi re^{-r^2}\diff{\theta,r}\\
+  =\\
+    & 2\pi\int_0^\infty re^{-r^2}\diff{r}\\
+  \why[=]{Tomando $u=r^2$}\\
+    & \pi\int_0^\infty e^{-u}\diff{u}\\
+  =\\
+    & \pi
+\end{longderivation}
+Con lo que, $I = \sqrt{\pi}$.
+
+Continuando con la demostración del teorema
+\begin{Demo}
+  Para las integrales implicadas en este resultado, se utilizará eventualmente el
+  siguiente cambio de variable
+  \[t = \frac{x - \mu}{\sqrt{2\sigma^2}}\]
+  Cuando $x\to\pm\infty$, $t\to\pm\infty$.
+  \begin{enumerate}
+    \item Dado que todos los términos de la función de densidad son no negativos, se cumple.
+    \item~
+    \begin{longderivation}
+        & \int_{-\infty}^{\infty}\dfrac{1}{\sqrt{2\pi\sigma^2}}
+        e^{-\nicefrac{(x-\mu)^2}{\left(2\sigma^2\right)}}\diff{x}\\
+      \why[=]{Haciendo uso del cambio de variable presentado}\\
+        & \frac{1}{\sqrt{\pi}}\int_{-\infty}^{\infty}e^{-t^2}\diff{t}\\
+      =\\
+        & 1
+    \end{longderivation}
+    \item~
+    \begin{longderivation}
+        & \text{E}[X]\\
+      =\\
+        & \int_{-\infty}^{\infty}\dfrac{1}{\sqrt{2\pi\sigma^2}}
+        x\,e^{-\nicefrac{(x-\mu)^2}{\left(2\sigma^2\right)}}\diff{x}\\
+      \why[=]{Haciendo uso del cambio de variable presentado}\\
+        & \dfrac{1}{\sqrt{\pi}}\int_{-\infty}^{\infty}
+        (\sqrt{\pi\sigma^2}t + \mu)e^{-t^2}\diff{t}\\
+      =\\
+        & \sqrt{\frac{2\sigma^2}{\pi}}\int_{-\infty}^{\infty}te^{-t^2}\diff{t}
+        + \frac{\mu}{\sqrt{\pi}}\int_{-\infty}^{\infty}e^{-t^2}\diff{t}\\
+      =\\
+        & \sqrt{\frac{2\sigma^2}{\pi}}\left(
+          \lim_{R_1\to\infty}\int_{-R_1}^0te^{-t^2}\diff{t}
+          + \lim_{R_2\to\infty}\int_0^{R_2}te^{-t^2}\diff{t}
+        \right) + \mu
+    \end{longderivation}
+    Para proceder con ambas integrales, se realiza el cambio de variable
+    $u=x^2$, cuando $x=0$, $u=0$, cuando $x=\pm R_{1,2}$, $u=R_{1,2}^2$. Así
+    \begin{longderivation}
+        & \sqrt{\frac{2\sigma^2}{\pi}}\left(
+            \lim_{R_1\to\infty}\int_{-R_1}^0te^{-t^2}\diff{t}
+            + \lim_{R_2\to\infty}\int_0^{R_2}te^{-t^2}\diff{t}
+          \right) + \mu\\
+      =\\
+        & \sqrt{\frac{2\sigma^2}{\pi}}\left(
+          \lim_{R_1\to\infty}-\int_0^{R_1}e^{-u}\diff{u}
+          + \lim_{R_2\to\infty}\int_0^{R_2}e^{-u}\diff{u}
+        \right) + \mu\\
+      =\\
+        & \sqrt{\frac{2\sigma^2}{\pi}}\left(
+          \lim_{R_1\to\infty} -1 + e^{-R_1}
+          + \lim_{R_2\to\infty} -e^{-R_2} + 1
+        \right) + \mu\\
+      =\\
+        & \mu
+    \end{longderivation}
+    \item~
+    \begin{longderivation}
+        & \text{Var}[X]\\
+      =\\
+        & \text{E}[X^2] - \text{E}[X]\\
+      =\\
+        & \int_{-\infty}^{\infty}\dfrac{1}{\sqrt{2\pi\sigma^2}}
+        x^2e^{-\nicefrac{(x-\mu)^2}{\left(2\sigma^2\right)}}\diff{x}
+        - \mu^2\\
+      \why[=]{Haciendo uso del cambio de variable presentado}\\
+        & \frac{1}{\sqrt{\pi}}\int_{-\infty}^{\infty}
+        (\sqrt{2\sigma^2}t + \mu)^2e^{-t^2}\diff{t} - \mu^2\\
+      =\\
+        & \frac{1}{\sqrt{\pi}}\left(
+          2\sigma^2\int_{-\infty}^{\infty}t^2e^{-t^2}\diff{t}
+          + 2\sqrt{2\sigma^2}\mu\int_{-\infty}^{\infty}te^{-t^2}\diff{t}
+          + \mu^2\int_{-\infty}^{\infty}e^{-t^2}\diff{t}
+        \right) - \mu^2\\
+      =\\
+        & \frac{2\sigma^2}{\sqrt{\pi}}\int_{-\infty}^{\infty}
+        t^2e^{-t^2}\diff{t}\\
+      =\\
+        & \frac{2\sigma^2}{\sqrt{\pi}}\left(
+          \lim_{R_1\to\infty}\int_{-R_1}^0 t^2e^{-t^2}\diff{t}
+          + \lim_{R_2\to\infty}\int_0^{R_2}t^2e^{-t^2}\diff{t}
+        \right)
+    \end{longderivation}
+    Nótese que $\odv*{e^{-t^2}}{t}=-2te^{-t^2}$, con lo que
+    resulta conveniente hacer integración por partes tomando
+    una de las funciones como $t$ y la otra como $te^{-t^2}$.
+    Así,
+    \begin{longderivation}
+        & \frac{2\sigma^2}{\sqrt{\pi}}\left(
+            \lim_{R_1\to\infty}\int_{-R_1}^0 t^2e^{-t^2}\diff{t}
+            + \lim_{R_2\to\infty}\int_0^{R_2}t^2e^{-t^2}\diff{t}
+          \right)\\
+      =\\
+        & \frac{2\sigma^2}{\sqrt{\pi}}\left(
+          \lim_{R_1\to\infty}
+          R_1\frac{e^{-R_1^2}}{2} + \frac{1}{2}\int_{-R_1}^0e^{-t^2}\diff{t}
+          + \lim_{R_2\to\infty}
+          -R_2\frac{e^{-R_2^2}}{2} + \frac{1}{2}\int_0^{R_2}e^{-t^2}\diff{t}
+        \right)\\
+      =\\
+        & \frac{2\sigma^2}{\sqrt{\pi}}\frac{1}{2}\int_{-\infty}^{\infty}
+        e^{-t^2}\diff{t}\\
+      =\\
+        & \sigma^2
+    \end{longderivation}
+  \end{enumerate}
+\end{Demo}

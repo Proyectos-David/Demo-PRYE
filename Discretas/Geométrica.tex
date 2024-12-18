@@ -1,0 +1,96 @@
+\subsubsection{Distribucion geométrica}
+\begin{Def}
+    Sea $X$ una variable aleatoria discreta, $X$ sigue una distribución
+    geométrica con parámetro $0<p<1$, denotada por $\text{Geo}(p)$, cuando su
+    función de masa es
+    \[
+        f(x) = \text{P}(X=x)=p(1-p)^{x-1} \qquad (x \in \Z^+)
+    \]
+\end{Def}
+\begin{Teo}
+    Sea $X\sim\text{Geo}(p)$. Entonces,
+    \begin{enumerate}
+        \item Para todo $X\in\Z$, $0\leq P(X=x)\leq1$
+        \item $\sum_{x\in\Z}P(X=x)=1$
+        \item $\text{E}[X]=\frac{1}{p}$
+        \item $\text{Var}[X]=\frac{1-p}{p^2}$
+    \end{enumerate}
+\end{Teo}
+\begin{Demo}~
+    \begin{enumerate}
+        \item Dado que $0<p< 1$, entones $-1<p-1<0$, y así,
+        para $x\in\Z^+$, $0<(p-1)^{x-1}<1$.
+        Por otro lado multiplicando las desigualdades mienbro a miembro
+        se obtien que $0<p(p-1)^{x-1}<1$. 
+        \item \[
+        \sum_{x\in\Z}P(X=x)
+        \]
+        Como $P(X\leq 0)=0$, entonces la suma resulta en
+        \[
+        \sum_{x=1 }^{\infty}p(1-p)^{x-1}
+        \] 
+        Como $p$ es constante, la suma es la serie geométrica de $1-p$, 
+        luego, la expresión es igual a 
+        \[
+        p\sum_{x=1}^{\infty}(1-p)^{x-1} = p\left(\frac{1}{1-(1-p)}\right)=1
+        \]
+        \item Sea $f(p)=\sum_{x=0}^{\infty}(1-p)^{x}\quad(0<p<1)$.
+        Dado que $0<p<1$, la función está bien definida en el dominio presentado.
+        Al ser $f$ una representación en serie, se tiene que
+        \[f(1-p)=\frac{1}{1-(1-p)}=\frac{1}{p}\]
+        Así
+        \begin{longderivation}
+            & \odv*{f(1-p)}{p} = \odv*{\left(\frac{1}{p}\right)}{p}\\
+            \iff\\
+            &\odv*{\sum_{x=0}^{\infty}(1-p)^{x}}{p}=\odv*{\left(\frac{1}{p}\right)}{p}\\
+            \iff\\
+            &-\sum_{x=1}^{\infty}x(1-p)^{x-1}=-\frac{1}{p^2}\\
+            \iff\\
+            &\sum_{x=1}^{\infty}x(1-p)^{x-1}=\frac{1}{p^2}
+        \end{longderivation}
+        Multiplicando ambos términos por $p$, se obtiene la expresión
+        \[
+            \sum_{x=1}^{\infty}xp(1-p)^{x-1}=\frac{1}{p}
+        \]
+        El miembro de la derecha no es otra cosa que el valor 
+        esperado de la distribución geométrica. Así pues 
+        $\text{E}[X]=\dfrac{1}{p}$
+        \item Sea $f(p)=-\sum_{x=1}^{\infty}x(1-p)^x$. Entonces
+        $f'(p)=\sum_{x=1}^{\infty}x^2(1-p)^{x-1}$. Por otra parte,
+        \begin{longderivation}
+            &f(p)\\
+            =\\
+            &-\sum_{X=1}^{\infty}x(1-p)^x\\
+            =\\
+            &-(1-p)\sum_{x=1}^{\infty}x(1-p)^{x-1}\\
+            =\\
+            &p\sum_{x=1}^{\infty}x(1-p)^{x-1}
+            -
+            \sum_{x=1}^{\infty}x(1-p)^{x-1}\\
+            =\\
+            &\text{E}[X] - \frac{\text{E}[X]}{p}\\
+            =\\
+            &\frac{1}{p}-\frac{1}{p^2}
+        \end{longderivation}
+        Derivando la expresión y multiplicando por $p$, se obtiene
+        \begin{longderivation}
+            & \text{E}[X^2]\\
+            =\\
+            &p\odv*{\left(\frac{1}{p}-\frac{1}{p^2}\right)}{p}\\
+            =\\
+            &\frac{-1}{p}+\frac{2}{p^2}
+        \end{longderivation}
+        Por la definición de varianza y con el resultado anterior
+        se obtiene que 
+        \begin{longderivation}
+            &\text{Var}[X]\\
+            =\\
+            &\sum_{x=1}^{\infty}x^2(1-p)^{x-1} - \text{E}^2[X]\\
+            =\\
+            &\frac{2}{p^2}-\frac{1}{p}-\frac{1}{p^2}\\
+            =\\
+            &\frac{1-p}{p^2}
+        \end{longderivation}
+        Con lo que concluye la demostración
+    \end{enumerate}
+\end{Demo}
